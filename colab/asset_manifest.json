@@ -1,0 +1,128 @@
+{
+  "bundle_version": "1.0.0",
+  "purpose": "Colab presentation inference only; no training or test-set access",
+  "models": [
+    {
+      "role": "parcel localizer",
+      "name": "YOLO11n",
+      "version": "PARCEL-DET-001",
+      "file": "runs/PARCEL-DET-001_yolo11n_v3/weights/best.pt",
+      "sha256": "5ffb658923312b26521fed8035cfa36131a4968d773e5a83042ec91588ae9c0f",
+      "classes": [
+        "Boxes"
+      ]
+    },
+    {
+      "role": "parcel-state classifier",
+      "name": "MobileNetV3-Small",
+      "version": "parcel-state-v1",
+      "file": "models/parcel_state_classifier/best.pt",
+      "sha256": "1a89ab91dea29cd0f9db1c92d9131c285724bf53438b6d1c926bd4e93702cf7b",
+      "classes": [
+        "closed_box",
+        "open_box"
+      ]
+    },
+    {
+      "role": "image classifier",
+      "name": "MobileNetV3-Large",
+      "version": "transfer-mobile-v1",
+      "file": "models/transfer_learning/mobilenet_v3_large_frozen/best_model.pt",
+      "sha256": "f255600ad26289e7a3cc3b277926ffd91c8384a013a4203808b12d4ea77629d1"
+    },
+    {
+      "role": "damage detector",
+      "name": "YOLO11n",
+      "version": "EXP-002",
+      "file": "runs/EXP-002_yolo11n_ontology_corrected/weights/best.pt",
+      "sha256": "aa52a6452f593f70759754b240d3a714c62af09f3cab7372aab40545ddce8e9f",
+      "classes": [
+        "minor_damage",
+        "compressed",
+        "hole",
+        "wet"
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "file": "colab/demo_samples/intact_conveyor.jpg",
+      "title": "Domain-shift review case",
+      "ground_truth": "intact",
+      "source_split": "parcel_binary_v2 validation",
+      "presentation_point": "Shows a conservative false-positive REVIEW on an out-of-domain scene",
+      "source_dataset": "Damaged Box Detection",
+      "license": "CC BY 4.0",
+      "attribution_url": "https://universe.roboflow.com/project-33xgh/damaged-box-detection",
+      "expected_demo_output": {
+        "classifier_label": "intact",
+        "classifier_executed": false,
+        "minimum_yolo_detections": 0,
+        "maximum_yolo_detections": 0,
+        "decision": "REVIEW",
+        "status": "ok",
+        "minimum_parcels": 1,
+        "required_parcel_state": "open_box"
+      }
+    },
+    {
+      "file": "colab/demo_samples/hole.jpg",
+      "title": "First-stage detector miss",
+      "ground_truth": "damaged: hole",
+      "source_split": "parcel_damage_v3 validation",
+      "presentation_point": "Shows that failed parcel localization is routed to REVIEW",
+      "source_dataset": "My First Project",
+      "license": "CC BY 4.0",
+      "attribution_url": "https://universe.roboflow.com/damaged-package-detection/my-first-project-5g94h",
+      "expected_demo_output": {
+        "classifier_label": "intact",
+        "classifier_executed": false,
+        "minimum_yolo_detections": 0,
+        "maximum_yolo_detections": 0,
+        "decision": "REVIEW",
+        "status": "no_parcel_detected",
+        "maximum_parcels": 0
+      }
+    },
+    {
+      "file": "colab/demo_samples/classifier_miss_caught_by_yolo.jpg",
+      "title": "Closed damaged parcel",
+      "ground_truth": "damaged",
+      "source_split": "parcel_binary_v2 validation",
+      "presentation_point": "Shows closed-parcel classification and localized damage evidence",
+      "source_dataset": "Damaged Box Detection",
+      "license": "CC BY 4.0",
+      "attribution_url": "https://universe.roboflow.com/project-33xgh/damaged-box-detection",
+      "expected_demo_output": {
+        "classifier_label": "damaged",
+        "classifier_executed": true,
+        "minimum_yolo_detections": 1,
+        "required_yolo_class": "hole",
+        "decision": "REVIEW",
+        "status": "ok",
+        "minimum_parcels": 1,
+        "required_final_status": "closed_damaged"
+      }
+    },
+    {
+      "file": "colab/demo_samples/known_open_box_failure.jpg",
+      "title": "Open-box gate",
+      "ground_truth": "damaged: open box",
+      "source_split": "parcel_binary_v2 validation",
+      "presentation_point": "Shows state classification stopping unnecessary downstream models",
+      "source_dataset": "Damaged Box Detection",
+      "license": "CC BY 4.0",
+      "attribution_url": "https://universe.roboflow.com/project-33xgh/damaged-box-detection",
+      "expected_demo_output": {
+        "classifier_label": "intact",
+        "classifier_executed": false,
+        "minimum_yolo_detections": 0,
+        "maximum_yolo_detections": 0,
+        "decision": "REVIEW",
+        "status": "ok",
+        "minimum_parcels": 1,
+        "required_parcel_state": "open_box"
+      }
+    }
+  ]
+}

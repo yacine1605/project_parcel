@@ -1,0 +1,4 @@
+# Colab supplies a CUDA-compatible PyTorch and torchvision build. Reinstalling
+# either package can break the runtime's CUDA pairing, so this demo only pins
+# the external inference library used by the frozen YOLO checkpoint.
+ultralytics==8.4.129

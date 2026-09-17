@@ -1,0 +1,3 @@
+# Phase 18 dashboard dependency. Install into the existing project environment:
+#   .\venv\Scripts\python.exe -m pip install -r requirements-dashboard.txt
+streamlit==1.62.0

@@ -1,0 +1,110 @@
+{
+  "phase": "10D",
+  "status": "frozen_before_test",
+  "dataset_version": "parcel_binary_v2",
+  "architecture": "mobilenet_v3_large",
+  "architecture_display_name": "MobileNetV3-Large",
+  "torchvision_constructor": "torchvision.models.mobilenet_v3_large",
+  "pretrained_weights": "MobileNet_V3_Large_Weights.IMAGENET1K_V2",
+  "training_strategy": "strictly frozen ImageNet backbone; only classifier.3 linear head trained",
+  "checkpoint_path": "models/transfer_learning/mobilenet_v3_large_frozen/best_model.pt",
+  "checkpoint_sha256": "f255600ad26289e7a3cc3b277926ffd91c8384a013a4203808b12d4ea77629d1",
+  "checkpoint_size_mib": 16.231453895568848,
+  "total_parameters": 4203313,
+  "trainable_parameters_during_experiment_a": 1281,
+  "input": {
+    "color": "RGB",
+    "resize": "resize shorter side to 256 while preserving aspect ratio",
+    "crop": "center crop 224x224",
+    "tensor_shape": "[batch_size, 3, 224, 224]",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "random_augmentation_at_inference": false
+  },
+  "model_output": "one raw damaged logit per image; shape [batch_size]",
+  "probability_conversion": "torch.sigmoid(logit)",
+  "prediction_rule": "damaged if probability >= frozen_threshold, otherwise intact",
+  "frozen_threshold": 0.43458425998687744,
+  "threshold_calibration_dataset": "validation only",
+  "damaged_recall_target": 0.9,
+  "threshold_selection_rule": "recall >= 90%; maximize specificity; then precision; then F1; then threshold closest to 0.5",
+  "validation_metrics_at_frozen_threshold": {
+    "threshold": 0.43458425998687744,
+    "accuracy": 0.8885135135135135,
+    "damaged_recall": 0.9030612244897959,
+    "specificity": 0.86,
+    "damaged_precision": 0.9267015706806283,
+    "damaged_f1": 0.9147286821705425,
+    "balanced_accuracy": 0.8815306122448979,
+    "tp": 354,
+    "tn": 172,
+    "fp": 28,
+    "fn": 38,
+    "confusion_matrix": [
+      [
+        172,
+        28
+      ],
+      [
+        38,
+        354
+      ]
+    ]
+  },
+  "validation_ranking_metrics": {
+    "roc_auc": 0.9489413265306123,
+    "pr_auc": 0.9760246651108454
+  },
+  "validation_subgroup_metrics": {
+    "ordinary_damaged": {
+      "support": 343,
+      "detected": 329,
+      "false_negatives": 14,
+      "recall": 0.9591836734693877
+    },
+    "open_box": {
+      "support": 49,
+      "detected": 25,
+      "false_negatives": 24,
+      "recall": 0.5102040816326531
+    }
+  },
+  "validation_inference_ms_per_image_rtx5060": 0.5111746621743215,
+  "source_artifacts": {
+    "model_metadata_path": "models/transfer_learning/mobilenet_v3_large_frozen/experiment_metadata.json",
+    "model_metadata_sha256": "9ac6b56f96deedb22d829a7843a62d9caff3b377a201f9c1ec87966a7b040ffa",
+    "validation_predictions_path": "models/transfer_learning/mobilenet_v3_large_frozen/validation_predictions.csv",
+    "validation_predictions_sha256": "53b134a4789931876b8f7d7d3d51336482a25cdb6f7ee9dc1468846a8a8466d4",
+    "calibration_path": "models/transfer_learning_calibration/validation_calibration_results.json",
+    "calibration_sha256": "d3ba12c96a47b8333f2d4962a35dd8d59380a6fbb6b608f7e25edb991a02b45b",
+    "strict_freeze_audit_path": "models/transfer_learning/strict_freeze_audit.json",
+    "strict_freeze_audit_sha256": "bf32e9173c80ea83400237a0ff4fe924f81a2b37d4b0267e076e456c257e7fdf"
+  },
+  "integrity_checks": {
+    "architecture_is_selected_mobile_net": true,
+    "dataset_is_parcel_binary_v2": true,
+    "training_used_train_validation_only": true,
+    "test_was_closed_during_training": true,
+    "backbone_was_frozen": true,
+    "strict_backbone_state_audit_passed": true,
+    "calibration_used_validation_only": true,
+    "test_was_closed_during_calibration": true,
+    "recall_target_is_predefined_90_percent": true,
+    "validation_leader_is_mobile_net": true,
+    "leader_was_not_previously_frozen": true
+  },
+  "test_accessed": false,
+  "model_retrained_in_phase10d": false,
+  "threshold_recalibrated_in_phase10d": false,
+  "must_not_change_after_test": true,
+  "frozen_at_utc": "2026-08-28T21:07:55.723644+00:00",
+  "freeze_version": "transfer-mobile-v1"
+}

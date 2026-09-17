@@ -1,0 +1,63 @@
+# Python environments and caches
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+colab/*.zip
+colab/**/*.zip
+colab/**/*.pt
+
+# Local tool/runtime state
+.agents/
+.codex/
+Ultralytics/
+.matplotlib-cache/
+
+# Large research datasets and generated outputs
+datasets/
+data/
+experiments/
+notbooks/
+prototype_outputs/
+reports/**/*.csv
+reports/**/*.json
+reports/**/*.jpg
+reports/**/*.jpeg
+reports/**/*.png
+reports/**/*.pt
+reports_v2/
+reports_v3/
+weights/
+/*.pt
+
+# Local planning brief used during development, not part of the public guide.
+Codex Instructions*.md
+
+# Keep only the four inference checkpoints required by the current demo.
+models/*
+!models/selected_transfer_model/
+models/selected_transfer_model/*
+!models/selected_transfer_model/selected_transfer_model.json
+!models/transfer_learning/
+models/transfer_learning/*
+!models/transfer_learning/mobilenet_v3_large_frozen/
+models/transfer_learning/mobilenet_v3_large_frozen/*
+!models/transfer_learning/mobilenet_v3_large_frozen/best_model.pt
+!models/parcel_state_classifier/
+models/parcel_state_classifier/*
+!models/parcel_state_classifier/best.pt
+
+runs/*
+!runs/EXP-002_yolo11n_ontology_corrected/
+runs/EXP-002_yolo11n_ontology_corrected/*
+!runs/EXP-002_yolo11n_ontology_corrected/weights/
+runs/EXP-002_yolo11n_ontology_corrected/weights/*
+!runs/EXP-002_yolo11n_ontology_corrected/weights/best.pt
+!runs/PARCEL-DET-001_yolo11n_v3/
+runs/PARCEL-DET-001_yolo11n_v3/*
+!runs/PARCEL-DET-001_yolo11n_v3/weights/
+runs/PARCEL-DET-001_yolo11n_v3/weights/*
+!runs/PARCEL-DET-001_yolo11n_v3/weights/best.pt
